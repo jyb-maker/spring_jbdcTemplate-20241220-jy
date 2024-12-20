@@ -16,7 +16,7 @@ public class BoardController {
 	
 	private JdbcTemplate template;
 	
-	@Autowired
+	@Autowired //컨테이너 만들어져 있는 bean(객체)가 자동으로 DI 됨
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 		Constant.template = this.template;
@@ -29,6 +29,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/writeOk")
 	public String writeOk(HttpServletRequest request, Model model) {
+		
 		String bname = request.getParameter("bname");
 		String btitle = request.getParameter("btitle");
 		String bcontent = request.getParameter("bcontent");
@@ -38,5 +39,18 @@ public class BoardController {
 		
 		return "redirect:boardList";
 	}
+	
+	@RequestMapping(value = "/boardList")
+	public String boardList(HttpServletRequest request, Model model) {
+		
+		BoardDao boardDao = new BoardDao();
+		model.addAttribute("bDtos", boardDao.boardList());
+		
+		return "boardList";
+	}
+	
+	
+	
+	
 	
 }
