@@ -27,6 +27,11 @@ public class BoardController {
 		return "write_form";
 	}
 	
+	@RequestMapping(value = "/delete_form")
+	public String delete_form() {
+		return "delete_form";
+	}
+	
 	@RequestMapping(value = "/writeOk")
 	public String writeOk(HttpServletRequest request, Model model) {
 		
@@ -49,7 +54,16 @@ public class BoardController {
 		return "boardList";
 	}
 	
-	
+	@RequestMapping(value = "/deleteOk")
+	public String deleteOk(HttpServletRequest request, Model model) {
+		
+		String bnum = request.getParameter("bnum");		
+		
+		BoardDao boardDao = new BoardDao();
+		boardDao.boardDelete(bnum);
+		
+		return "redirect:boardList";
+	}
 	
 	
 	

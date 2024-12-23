@@ -10,19 +10,15 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.jbedu.board.dto.BoardDto;
 import com.jbedu.board.util.Constant;
 
 public class BoardDao {
 	
-	//private DataSource dataSource;
 	private JdbcTemplate template;
-	
 
-//	public void setTemplate(JdbcTemplate template) {//DI
-//		this.template = template;
-//	}
 	public BoardDao() {
 		this.template = Constant.template;
 	}
@@ -58,5 +54,20 @@ public class BoardDao {
 		return bDtos;
 	}
 	
+	//글 삭제 하기
+	public void boardDelete(final String bnum) {
+		
+		String sql = "DELETE FROM mvc_board WHERE bnum=?";
+		
+		this.template.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement pstmt) throws SQLException {
+				// TODO Auto-generated method stub
+				pstmt.setString(1, bnum);
+			}
+		});	
+		
+	}
 	
 }
